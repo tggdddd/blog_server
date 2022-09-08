@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.blogapi.mapper.TagMapper">
+    <insert  id="addTag" parameterType="com.example.blogapi.pojo.TagEntity">
+        INSERT
+        into tag(id,tag,color)
+        values(#{id},#{tag},#{color})
+    </insert>
+
+
+    <select  id="findByLinkId" parameterType="int" resultType="com.example.blogapi.pojo.TagEntity">
+        SELECT *
+        FROM tag
+        WHERE
+            id = #{id}
+    </select>
+</mapper>
