@@ -3,5 +3,30 @@
 
 <mapper namespace="com.example.blogapi.mapper.ArticleMapper">
 
+    <insert id="addArticle" parameterType="com.example.blogapi.pojo.ArticleEntity">
+        INSERT INTO springbootmanager.article(title,
+                            author,
+                            date,
+                            content) VALUES(#{title},#{author},#{date},#{content})
+    </insert>
 
+
+    <update id="updateArticle" parameterType="com.example.blogapi.pojo.ArticleEntity">
+        UPDATE springbootmanager.article
+        SET title   = #{title},
+            author  = #{author},
+            date = #{date},
+            content = #{content}
+        WHERE id = #{id}
+    </update>
+
+    <select id="findAll" resultType="com.example.blogapi.pojo.ArticleEntity">
+        SELECT * FROM springbootmanager.article
+    </select>
+
+
+    <select id="findByTitle" parameterType="object" resultType="com.example.blogapi.pojo.ArticleEntity">
+        SELECT * FROM springbootmanager.article
+        WHERE title like  CONCAT('%',#{title},'%')
+    </select>
 </mapper>

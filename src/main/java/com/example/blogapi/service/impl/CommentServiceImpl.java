@@ -4,7 +4,7 @@ import com.example.blogapi.service.CommentService;
 import org.springframework.stereotype.Service;
 
 
-@Service("commentService")
+@Service
 public class CommentServiceImpl implements CommentService {
 
 

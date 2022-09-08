@@ -15,3 +15,7 @@ spring:
 #      maximum-pool-size: 50
 mybatis:
   mapper-locations: classpath:com.example.blogapi.mapper/**/*.xml
+
+logging:
+  level:
+    com.example.blogapi.mapper: DEBUG
