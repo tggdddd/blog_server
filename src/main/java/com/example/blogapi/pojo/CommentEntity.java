@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 @Data
@@ -15,10 +16,9 @@ import java.util.Date;
 public class CommentEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private String id;
+	private int id;
 
 	private String email;
-
 	
 	private String name;
 
@@ -29,10 +29,10 @@ public class CommentEntity implements Serializable {
 	
 	private Date date;
 
-	private String parentId;
-
+	private int parentId;
 	
-	private String articleId;
+	private int articleId;
 
-
+	//子评论
+	private List<CommentEntity> subComment;
 }

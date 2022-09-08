@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class TagEntity implements Serializable {
 
-	private String id;
+	private int id;
 
 	private String tag;
 

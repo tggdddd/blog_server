@@ -4,4 +4,27 @@
 <mapper namespace="com.example.blogapi.mapper.CommentMapper">
 
 
+    <insert id="addComment" parameterType="com.example.blogapi.pojo.CommentEntity">
+        INSERT INTO springbootmanager.comment(
+                            email,
+                            name,
+                            `describe`,
+                            content,
+                            date,
+                            parentId,
+                            articleId)
+        VALUES (#{email}, #{name}, #{describe}, #{content},#{date}, #{parentId}, #{articleId})
+    </insert>
+    <delete id="deleteCommentById" parameterType="int">
+        DELETE FROM springbootmanager.comment
+        WHERE id=#{id}
+    </delete>
+    <select id="findCommentByArticleId" resultType="com.example.blogapi.pojo.CommentEntity">
+        SELECT * from springbootmanager.comment
+        WHERE articleId = #{articleId};
+    </select>
+    <select id="findCommentByCommentId" resultType="com.example.blogapi.pojo.CommentEntity">
+        SELECT * from springbootmanager.comment
+        WHERE parentId = #{commentId};
+    </select>
 </mapper>
