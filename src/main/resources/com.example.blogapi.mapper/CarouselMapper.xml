@@ -3,4 +3,25 @@
 
 <mapper namespace="com.example.blogapi.mapper.CarouselMapper">
 
+    <insert id="addCarouselEntity">
+        INSERT
+        INTO carousel(href, src, num)
+        values (#{href}, #{src}, #{num})
+    </insert>
+    <update id="updateCarousel">
+        UPDATE carousel
+        SET href=#{href},
+            src=#{src},
+            num=#{num}
+        WHERE id = #{id}
+    </update>
+    <delete id="deleteCarousel">
+        DELETE
+        FROM carousel
+        WHERE id = #{id}
+    </delete>
+    <select id="pullCarsouse" resultType="com.example.blogapi.pojo.CarouselEntity">
+        SELECT *
+        FROM carousel
+    </select>
 </mapper>
