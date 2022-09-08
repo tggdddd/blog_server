@@ -3,6 +3,12 @@
 
 <mapper namespace="com.example.blogapi.mapper.LinktagMapper">
 
-
+    <insert id="addLinkTag" parameterType="com.example.blogapi.pojo.LinktagEntity">
+        INSERT INTO linktag(articleId, tagId)
+        VALUES (#{articleId}, #{tagId})
+    </insert>
+    <delete id="deleteLinkTag" parameterType="com.example.blogapi.pojo.LinktagEntity">
+        DELETE FROM linktag WHERE tagId =#{tagId} and articleId = #{articleId}
+    </delete>
 
 </mapper>

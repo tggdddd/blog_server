@@ -4,11 +4,15 @@
 <mapper namespace="com.example.blogapi.mapper.TagMapper">
     <insert  id="addTag" parameterType="com.example.blogapi.pojo.TagEntity">
         INSERT
-        into tag(id,tag,color)
-        values(#{id},#{tag},#{color})
+        into tag(tag,color)
+        values(#{tag},#{color})
     </insert>
-    <update id="updateTag"></update>
-
+    <update id="updateTag" parameterType="com.example.blogapi.pojo.TagEntity">
+        UPDATE springbootmanager.tag
+        SET tag   = #{tag},
+            color  = #{color}
+        WHERE id = #{id}
+    </update>
 
     <select  id="findByLinkId" parameterType="int" resultType="com.example.blogapi.pojo.TagEntity">
         SELECT *

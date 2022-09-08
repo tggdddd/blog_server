@@ -1,6 +1,7 @@
 package com.example.blogapi.controller;
 
 
+import com.example.blogapi.pojo.ArticleEntity;
 import com.example.blogapi.pojo.TagEntity;
 import com.example.blogapi.resp.RespCode;
 import com.example.blogapi.resp.RespModel;
@@ -18,21 +19,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
-@Controller
+@RestController
 @RequestMapping("/tag")
 public class TagController {
     @Resource
     private TagService tagService;
 
-    @ResponseBody
     @PostMapping("/add")
     public RespModel add(@RequestBody TagEntity tag){
         return tagService.addTag(tag);
     }
-    @ResponseBody
     @GetMapping("/find/{id}")
     public RespModel findByLinkId(@PathVariable int id){
         return tagService.findByLinkId(id);
+    }
+
+    /**
+     * 通过文章ID修改文章
+     */
+    @PostMapping("/update")
+    public RespModel updateTag(@RequestBody TagEntity tagEntity){
+        return tagService.updateTag(tagEntity);
     }
 
 }

@@ -32,4 +32,15 @@ public class TagServiceImpl  implements TagService {
         }
         return new RespModel(RespCode.FAILURE,null);
     }
+
+    @Override
+    public RespModel updateTag(TagEntity tagEntity) {
+        int res = tagMapper.updateTag(tagEntity);
+        if(res!=0){
+            return new RespModel(RespCode.SUCCESS,res);
+        }
+        RespModel respModel = new RespModel(RespCode.FAILURE,res);
+        respModel.setMsg("修改失败");
+        return respModel;
+    }
 }
