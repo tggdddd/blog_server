@@ -35,6 +35,13 @@ public class LinkTagController {
     public RespModel delete(@RequestBody LinktagEntity linktagEntity){
         return linktagService.deleteLinkTag(linktagEntity);
     }
+    /**获取文章的所有标签
+     */
+    @GetMapping("/getClass")
+    public RespModel getArticleClass(@RequestParam(name = "id") int articleId){
+        return linktagService.getArticleClass(articleId);
+    }
+
     /**根据标签id获取文章*/
     @GetMapping("/search")
     public RespModel search(@RequestParam String tagName){

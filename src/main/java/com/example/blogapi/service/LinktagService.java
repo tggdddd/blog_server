@@ -22,5 +22,8 @@ public interface LinktagService{
     /**根据标签id获取文章的总数*/
     RespModel searchArticleTotal(String tagName);
 
+    /**获取文章的所有标签
+     */
+    RespModel getArticleClass(int articleId);
 }
 

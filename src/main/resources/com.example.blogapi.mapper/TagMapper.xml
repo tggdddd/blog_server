@@ -15,7 +15,7 @@
     </update>
 
     <select id="findByLinkId" parameterType="int" resultType="com.example.blogapi.pojo.TagEntity">
-        SELECT *
+        SELECT id,tag,color
         FROM tag
         WHERE id = #{id}
     </select>

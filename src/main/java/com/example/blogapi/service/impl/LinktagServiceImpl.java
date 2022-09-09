@@ -3,6 +3,7 @@ package com.example.blogapi.service.impl;
 import com.example.blogapi.mapper.LinktagMapper;
 import com.example.blogapi.pojo.ArticleEntity;
 import com.example.blogapi.pojo.LinktagEntity;
+import com.example.blogapi.pojo.TagEntity;
 import com.example.blogapi.resp.RespCode;
 import com.example.blogapi.resp.RespModel;
 import com.example.blogapi.service.LinktagService;
@@ -13,6 +14,14 @@ import java.util.List;
 
 @Service
 public class LinktagServiceImpl implements LinktagService {
+    @Override
+    public RespModel getArticleClass(int articleId) {
+        List<TagEntity> list = linktagMapper.getArticleClass(articleId);
+        if(list!=null){
+            return new RespModel(RespCode.SUCCESS,list);
+        }
+        return new RespModel(RespCode.FAILURE,null);
+    }
 
     @Resource
     LinktagMapper linktagMapper;

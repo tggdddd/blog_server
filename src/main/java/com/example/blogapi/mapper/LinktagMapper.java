@@ -2,6 +2,7 @@ package com.example.blogapi.mapper;
 
 import com.example.blogapi.pojo.ArticleEntity;
 import com.example.blogapi.pojo.LinktagEntity;
+import com.example.blogapi.pojo.TagEntity;
 
 import java.util.List;
 
@@ -22,4 +23,7 @@ public interface LinktagMapper {
 
     /**根据标签名字获取文章的总数*/
     int searchArticleTotal(String tagName);
+    /**获取文章所有标签*/
+    List<TagEntity> getArticleClass(int articleId);
+
 }
