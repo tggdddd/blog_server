@@ -32,7 +32,8 @@
                title,
                author,
                date,
-               SUBSTRING(content, 1, 300) as content
+               SUBSTRING(content, 1, 300) as content,
+               browse
         FROM springbootmanager.article
     </select>
     <select id="findByTitleTotal" resultType="java.lang.Integer">
@@ -46,7 +47,8 @@
                title,
                author,
                date,
-               SUBSTRING(content, 1, 300) as content
+               SUBSTRING(content, 1, 300) as content,
+               browse
         FROM springbootmanager.article
         WHERE title like CONCAT('%', #{title}, '%')
     </select>

@@ -1,8 +1,10 @@
 package com.example.blogapi.controller;
 
 import com.example.blogapi.pojo.ArticleEntity;
+import com.example.blogapi.pojo.TagEntity;
 import com.example.blogapi.resp.RespModel;
 import com.example.blogapi.service.ArticleService;
+import com.example.blogapi.service.LinktagService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
 
 /**
  */
@@ -21,12 +25,14 @@ import javax.annotation.Resource;
 public class ArticleController {
     @Resource
     private ArticleService articleService;
-
+    @Resource
+    LinktagService linktagService;
     /**
      * 添加文章
      */
     @PostMapping("/add")
     public RespModel addArticle(@RequestBody ArticleEntity article){
+        article.setDate(new Date());
         return articleService.addArticle(article);
     }
 
@@ -59,8 +65,16 @@ public class ArticleController {
     @GetMapping("/pull")
     public RespModel findAll(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize,@RequestParam(defaultValue = "0") int tagId){
         PageHelper.startPage(pageNum,pageSize);
-        // System.out.println("pageNum"+pageNum+"\tpageSize"+pageSize);
-        return articleService.findAll();
+        RespModel respModel = articleService.findAll();
+        if(respModel.getCode()!="200"){
+            return respModel;
+        }
+        //获取标签
+        List<ArticleEntity> list = (List<ArticleEntity>)respModel.getData();
+        for (ArticleEntity articleEntity : list) {
+            articleEntity.setTags((List<TagEntity>) linktagService.getArticleClass(articleEntity.getId()).getData());
+        }
+        return respModel;
     }
 
     /**

@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/comment")
@@ -29,6 +31,7 @@ public class CommentController {
      */
     @PostMapping("/add")
     public RespModel add(@RequestBody CommentEntity commentEntity){
+        commentEntity.setDate(new Date());
         return commentService.addComment(commentEntity);
     }
 
@@ -38,7 +41,7 @@ public class CommentController {
      * @return
      */
     @GetMapping("/pull")
-    public RespModel findByLinkId(int articleId){
+    public RespModel findByLinkId(@RequestParam(name = "id") int articleId){
         return commentService.findCommentByArticleId(articleId);
     }
 

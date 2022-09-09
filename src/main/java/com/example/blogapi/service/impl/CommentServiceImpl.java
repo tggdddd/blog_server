@@ -10,6 +10,7 @@ import com.example.blogapi.service.CommentService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,6 +34,38 @@ public class CommentServiceImpl implements CommentService {
         }
         return new RespModel(RespCode.FAILURE,null);
     }
+    /////////////////////////多层的json/////////////////////////////////////////////////////
+    // @Override
+    // public RespModel findCommentByArticleId(int articleId) {
+    //     List<CommentEntity> list = commentMapper.findCommentByArticleId(articleId);
+    //     if(list!=null){
+    //         //获取子评论
+    //         getSubComment(list);
+    //         return new RespModel(RespCode.SUCCESS,list);
+    //     }
+    //     return new RespModel(RespCode.FAILURE,null);
+    // }
+    // /**评论子查询*/
+    // public void getSubComment(List<CommentEntity> list){
+    //     if(list == null){
+    //         return;
+    //     }
+    //     for (CommentEntity commentEntity : list) {
+    //         System.out.println(commentEntity.getId());
+    //         Object subList = findCommentByCommentId(commentEntity.getId()).getData();
+    //         commentEntity.setChildren((List<CommentEntity>) subList);
+    //         getSubComment(commentEntity.getChildren());
+    //     }
+    // }
+    ///////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    public RespModel findCommentByCommentId(int commentId) {
+        List<CommentEntity> list = commentMapper.findCommentByCommentId(commentId);
+        if(list!=null){
+            return new RespModel(RespCode.SUCCESS,list);
+        }
+        return new RespModel(RespCode.FAILURE,null);
+    }
 
     @Override
     public RespModel findCommentByArticleId(int articleId) {
@@ -40,22 +73,25 @@ public class CommentServiceImpl implements CommentService {
         if(list!=null){
             //获取子评论
             for (CommentEntity commentEntity : list) {
-                Object subList = findCommentByCommentId(commentEntity.getId()).getData();
-                if(subList!=null){
-                    commentEntity.setSubComment((List<CommentEntity>) subList);
-                }
+                getSubComment(commentEntity,commentEntity);
             }
             return new RespModel(RespCode.SUCCESS,list);
         }
         return new RespModel(RespCode.FAILURE,null);
     }
-
-    @Override
-    public RespModel findCommentByCommentId(int commentId) {
-        List<CommentEntity> list = commentMapper.findCommentByArticleId(commentId);
-        if(list!=null){
-            return new RespModel(RespCode.SUCCESS,list);
+    public void getSubComment(CommentEntity target,CommentEntity parent){
+        //获取children对象
+        List<CommentEntity> list = parent.getChildren();
+        if(list==null){
+            list = new ArrayList<>();
+            parent.setChildren(list);
         }
-        return new RespModel(RespCode.FAILURE,null);
+        //获取子评论
+        List<CommentEntity> subList =(List<CommentEntity>) findCommentByCommentId(target.getId()).getData();
+        //遍历添加子评论
+        for (CommentEntity commentEntity : subList) {
+            list.add(commentEntity);
+            getSubComment(commentEntity,parent);
+        }
     }
 }

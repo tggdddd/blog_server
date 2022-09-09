@@ -1,6 +1,7 @@
 package com.example.blogapi.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,7 @@ public class CommentEntity implements Serializable {
 
 	private String content;
 
-	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date date;
 
 	private int parentId;
@@ -34,5 +35,5 @@ public class CommentEntity implements Serializable {
 	private int articleId;
 
 	//子评论
-	private List<CommentEntity> subComment;
+	private List<CommentEntity> children;
 }
