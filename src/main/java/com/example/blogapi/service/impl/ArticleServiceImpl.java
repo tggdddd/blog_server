@@ -12,44 +12,87 @@ import java.util.List;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
-@Resource
-private ArticleMapper articleMapper;
+
+    @Resource
+    private ArticleMapper articleMapper;
+
+    /**
+     * 获得文章
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public RespModel getArticle(int id) {
+        ArticleEntity res = articleMapper.getArticle(id);
+        if (res != null) {
+            return new RespModel(RespCode.SUCCESS, res);
+        }
+        return new RespModel(RespCode.FAILURE, res);
+    }
 
     @Override
     public RespModel addArticle(ArticleEntity article) {
         int res = articleMapper.addArticle(article);
-        if(res!=0){
-            return new RespModel(RespCode.SUCCESS,res);
+        if (res != 0) {
+            return new RespModel(RespCode.SUCCESS, res);
         }
-        return new RespModel(RespCode.FAILURE,res);
+        return new RespModel(RespCode.FAILURE, res);
     }
 
     @Override
     public RespModel findByTitle(String title) {
         List<ArticleEntity> res = articleMapper.findByTitle(title);
-        if(res!=null){
-            return new RespModel(RespCode.SUCCESS,res);
+        if (res != null) {
+            return new RespModel(RespCode.SUCCESS, res);
         }
-        return new RespModel(RespCode.FAILURE,null);
+        return new RespModel(RespCode.FAILURE, null);
+    }
+
+    @Override
+    public RespModel findAllTotal() {
+        int res = articleMapper.findAllTotal();
+        return new RespModel(RespCode.SUCCESS, res);
+
+    }
+
+    @Override
+    public RespModel findByTitleTotal(String title) {
+        int res = articleMapper.findByTitleTotal(title);
+        return new RespModel(RespCode.SUCCESS, res);
     }
 
     @Override
     public RespModel findAll() {
         List<ArticleEntity> res = articleMapper.findAll();
-        if(res!=null){
-            return new RespModel(RespCode.SUCCESS,res);
+        if (res != null) {
+            return new RespModel(RespCode.SUCCESS, res);
         }
-        return new RespModel(RespCode.FAILURE,null);
+        return new RespModel(RespCode.FAILURE, null);
     }
 
     @Override
     public RespModel updateArticle(ArticleEntity article) {
         int res = articleMapper.updateArticle(article);
-        if(res!=0){
-            return new RespModel(RespCode.SUCCESS,res);
+        if (res != 0) {
+            return new RespModel(RespCode.SUCCESS, res);
         }
-        RespModel respModel = new RespModel(RespCode.FAILURE,res);
+        RespModel respModel = new RespModel(RespCode.FAILURE, res);
         respModel.setMsg("修改失败");
         return respModel;
+    }
+
+    @Override
+    public void increase(int id) {
+        articleMapper.increase(id);
+    }
+
+    @Override
+    public RespModel getHots() {
+        List<ArticleEntity> res = articleMapper.getHots();
+        if (res != null) {
+            return new RespModel(RespCode.SUCCESS, res);
+        }
+        return new RespModel(RespCode.FAILURE, null);
     }
 }

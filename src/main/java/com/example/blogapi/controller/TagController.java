@@ -24,7 +24,10 @@ import javax.annotation.Resource;
 public class TagController {
     @Resource
     private TagService tagService;
-
+    @RequestMapping("/all")
+    public RespModel getAllTag(){
+        return tagService.getAllTag();
+    }
     @PostMapping("/add")
     public RespModel add(@RequestBody TagEntity tag){
         return tagService.addTag(tag);

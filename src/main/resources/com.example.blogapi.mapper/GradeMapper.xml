@@ -4,4 +4,18 @@
 <mapper namespace="com.example.blogapi.mapper.GradeMapper">
 
 
+    <insert id="addGrade">
+        INSERT INTO springbootmanager.grade(articleId)
+        VALUES(#{gradeId})
+    </insert>
+    <update id="updateGrade">
+        UPDATE springbootmanager.grade SET count=count+1,cGrade = cGrade+#{point} WHERE articleId=#{articleId}
+    </update>
+    <delete id="deleteGrade">
+        DELETE FROM springbootmanager.grade WHERE articleId=#{articleId}
+    </delete>
+    <select id="getGrade" resultType="com.example.blogapi.pojo.GradeEntity">
+        SELECT `count`,cGrade FROM springbootmanager.grade
+        WHERE articleId=#{articleId}
+    </select>
 </mapper>

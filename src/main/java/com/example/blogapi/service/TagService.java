@@ -27,5 +27,8 @@ public interface TagService  {
      * 通过文章ID修改文章
      */
     RespModel updateTag(TagEntity tagEntity);
+
+    /**获得所有标签*/
+    RespModel getAllTag();
 }
 

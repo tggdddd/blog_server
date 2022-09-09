@@ -2,31 +2,81 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.blogapi.mapper.ArticleMapper">
-
+    <!--    添加文章-->
     <insert id="addArticle" parameterType="com.example.blogapi.pojo.ArticleEntity">
         INSERT INTO springbootmanager.article(title,
-                            author,
-                            date,
-                            content) VALUES(#{title},#{author},#{date},#{content})
+                                              author,
+                                              date,
+                                              content)
+        VALUES (#{title}, #{author}, #{date}, #{content})
     </insert>
 
-
+    <!--更新文章-->
     <update id="updateArticle" parameterType="com.example.blogapi.pojo.ArticleEntity">
         UPDATE springbootmanager.article
         SET title   = #{title},
             author  = #{author},
-            date = #{date},
+            date    = #{date},
             content = #{content}
         WHERE id = #{id}
     </update>
+    <update id="increase">
+        UPDATE springbootmanager.article
+        SET browse=browse+1
+        WHERE id=#{id}
+    </update>
 
+    <!--    获得所有文章-->
     <select id="findAll" resultType="com.example.blogapi.pojo.ArticleEntity">
-        SELECT * FROM springbootmanager.article
+        SELECT id,
+               title,
+               author,
+               date,
+               SUBSTRING(content, 1, 300) as content
+        FROM springbootmanager.article
+    </select>
+    <select id="findByTitleTotal" resultType="java.lang.Integer">
+        SELECT COUNT(id) as total
+        FROM springbootmanager.article
+        WHERE title like CONCAT('%', #{title}, '%')
+    </select>
+    <!--模糊搜索文章-->
+    <select id="findByTitle" parameterType="object" resultType="com.example.blogapi.pojo.ArticleEntity">
+        SELECT id,
+               title,
+               author,
+               date,
+               SUBSTRING(content, 1, 300) as content
+        FROM springbootmanager.article
+        WHERE title like CONCAT('%', #{title}, '%')
+    </select>
+    <select id="findAllTotal" resultType="java.lang.Integer">
+        SELECT COUNT(id) as total
+        FROM springbootmanager.article
+    </select>
+    <!--    获得热门文章  内容节选-->
+    <select id="getHots" resultType="com.example.blogapi.pojo.ArticleEntity">
+        SELECT id,
+               title,
+               author,
+               date,
+               SUBSTRING(content, 1, 300) as content,
+               browse
+        FROM springbootmanager.article
+        order by browse desc
+        limit 0,10
     </select>
 
 
-    <select id="findByTitle" parameterType="object" resultType="com.example.blogapi.pojo.ArticleEntity">
-        SELECT * FROM springbootmanager.article
-        WHERE title like  CONCAT('%',#{title},'%')
+    <!--    获得文章内容-->
+    <select id="getArticle" resultType="com.example.blogapi.pojo.ArticleEntity">
+        SELECT id,
+               title,
+               author,
+               date,
+               content,
+               browse
+        FROM springbootmanager.article
+        WHERE id = #{id}
     </select>
 </mapper>

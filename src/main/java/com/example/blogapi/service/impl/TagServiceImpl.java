@@ -25,6 +25,15 @@ public class TagServiceImpl  implements TagService {
     }
 
     @Override
+    public RespModel getAllTag() {
+        List<TagEntity> list = tagMapper.getAllTag();
+        if(list!=null){
+            return new RespModel(RespCode.SUCCESS,list);
+        }
+        return new RespModel(RespCode.FAILURE,null);
+    }
+
+    @Override
     public RespModel findByLinkId(int id) {
         List<TagEntity> list = tagMapper.findByLinkId(id);
         if(list!=null){

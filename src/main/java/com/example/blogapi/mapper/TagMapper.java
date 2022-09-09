@@ -26,4 +26,7 @@ public interface TagMapper {
      */
     int updateTag(TagEntity tag);
 
+    /**获得所有标签*/
+    List<TagEntity> getAllTag();
+
 }

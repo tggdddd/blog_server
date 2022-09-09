@@ -26,6 +26,4 @@ public class ArticleEntity implements Serializable {
 	private String content;
 
 	private Integer browse;
-
-
 }

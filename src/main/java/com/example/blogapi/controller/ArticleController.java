@@ -1,31 +1,20 @@
 package com.example.blogapi.controller;
 
 import com.example.blogapi.pojo.ArticleEntity;
-import com.example.blogapi.pojo.TagEntity;
 import com.example.blogapi.resp.RespModel;
 import com.example.blogapi.service.ArticleService;
-import com.example.blogapi.service.TagService;
 import com.github.pagehelper.PageHelper;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
- * @ClassName ArticleController
- * @Description
- * @Author 15014
- * @Time 2022/9/8 12:16
- * @Version 1.0
  */
 @RequestMapping("/article")
 @RestController
@@ -35,8 +24,6 @@ public class ArticleController {
 
     /**
      * 添加文章
-     * @param article
-     * @return
      */
     @PostMapping("/add")
     public RespModel addArticle(@RequestBody ArticleEntity article){
@@ -45,24 +32,51 @@ public class ArticleController {
 
     /**
      * 通过文章标题模糊查询
-     * @param title
-     * @return
      */
     @GetMapping("/search/{title}")
     public RespModel findByTitle(@PathVariable String title){
         return articleService.findByTitle(title);
     }
+    /**
+     * 通过文章标题模糊查询的总数
+     */
+    @GetMapping("/search/{title}/sum")
+    public RespModel findByTitleTotal(@PathVariable String title){
+        return articleService.findByTitleTotal(title);
+    }
+    /**获得文章的详细内容*/
+    @GetMapping("/detail")
+    public RespModel getArticle(@RequestParam int id){
+        //增加浏览次数
+        articleService.increase(id);
+        return articleService.getArticle(id);
+    }
 
     /**
      * 查询所有文章
-     *
+     * @param tagId 弃用
      */
     @GetMapping("/pull")
-    public RespModel findAll(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer limit){
-        PageHelper.startPage(pageNum,limit);
+    public RespModel findAll(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize,@RequestParam(defaultValue = "0") int tagId){
+        PageHelper.startPage(pageNum,pageSize);
+        // System.out.println("pageNum"+pageNum+"\tpageSize"+pageSize);
         return articleService.findAll();
     }
 
+    /**
+     * 查询所有文章的总数
+     */
+    @GetMapping("/pull/sum")
+    public RespModel findAllTotal(){
+        return articleService.findAllTotal();
+    }
+    /**
+     * 查询浏览人数排名前十的文章
+     */
+    @GetMapping("/getHotTopics")
+    public RespModel searchHots(){
+        return articleService.getHots();
+    }
     /**
      * 通过文章ID修改文章
      */

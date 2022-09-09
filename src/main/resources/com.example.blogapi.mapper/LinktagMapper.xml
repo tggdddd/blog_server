@@ -8,7 +8,40 @@
         VALUES (#{articleId}, #{tagId})
     </insert>
     <delete id="deleteLinkTag" parameterType="com.example.blogapi.pojo.LinktagEntity">
-        DELETE FROM linktag WHERE tagId =#{tagId} and articleId = #{articleId}
+        DELETE
+        FROM linktag
+        WHERE tagId = #{tagId}
+          and articleId = #{articleId}
     </delete>
+    <select id="searchArticle" resultType="com.example.blogapi.pojo.ArticleEntity">
+        SELECT id,
+               title,
+               author,
+            date,
+            SUBSTRING(content, 1, 300) as content
+        FROM article
+        WHERE article.id IN (
+            SELECT articleId
+            FROM linktag
+            WHERE linktag.tagId IN (
+            SELECT id
+            FROM tag
+            where tag.tag = #{tagName}
+            ))
+    </select>
+    <select id="searchArticleTotal" resultType="java.lang.Integer">
+        SELECT count(id)
+        FROM article
+        WHERE article.id IN (
+            SELECT articleId
+            FROM linktag
+            WHERE linktag.tagId IN (
+            SELECT id
+            FROM tag
+            where tag.tag = #{tagName}
+            ))
+    </select>
+    <resultMap id="mapArticle" type="com.example.blogapi.pojo.ArticleEntity">
 
+    </resultMap>
 </mapper>

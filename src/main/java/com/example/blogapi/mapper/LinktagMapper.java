@@ -1,6 +1,9 @@
 package com.example.blogapi.mapper;
 
+import com.example.blogapi.pojo.ArticleEntity;
 import com.example.blogapi.pojo.LinktagEntity;
+
+import java.util.List;
 
 public interface LinktagMapper {
     /**
@@ -14,4 +17,9 @@ public interface LinktagMapper {
      */
     int deleteLinkTag(LinktagEntity linktagEntity);
 
+    /**根据标签名字获取文章*/
+    List<ArticleEntity> searchArticle(String tagName);
+
+    /**根据标签名字获取文章的总数*/
+    int searchArticleTotal(String tagName);
 }
