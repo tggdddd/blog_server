@@ -63,7 +63,7 @@ public class ArticleController {
      * @param tagId 弃用
      */
     @GetMapping("/pull")
-    public RespModel findAll(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize,@RequestParam(defaultValue = "0") int tagId){
+    public RespModel findAll(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize,@RequestParam(defaultValue = "0") String tagName){
         PageHelper.startPage(pageNum,pageSize);
         RespModel respModel = articleService.findAll();
         if(respModel.getCode()!="200"){

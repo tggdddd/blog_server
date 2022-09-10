@@ -19,7 +19,7 @@ public interface CarouselMapper {
      *
      * @return
      */
-    List<CarouselEntity> pullCarsouse();
+    List<CarouselEntity> pullCarsousel();
 
     /**
      * 修改轮播图

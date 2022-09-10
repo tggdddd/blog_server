@@ -28,7 +28,7 @@ public class CarouselServiceImpl implements CarouselService {
 
     @Override
     public RespModel pullCarousel() {
-        List<CarouselEntity> res = carouselMapper.pullCarsouse();
+        List<CarouselEntity> res = carouselMapper.pullCarsousel();
         if(res!=null){
             return new RespModel(RespCode.SUCCESS,res);
         }

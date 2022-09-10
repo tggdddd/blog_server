@@ -1,9 +1,11 @@
 package com.example.blogapi.controller;
 
+import com.example.blogapi.pojo.ArticleEntity;
 import com.example.blogapi.pojo.LinktagEntity;
 import com.example.blogapi.pojo.TagEntity;
 import com.example.blogapi.resp.RespModel;
 import com.example.blogapi.service.LinktagService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @ClassName LinkTagController
@@ -44,12 +47,22 @@ public class LinkTagController {
 
     /**根据标签id获取文章*/
     @GetMapping("/search")
-    public RespModel search(@RequestParam String tagName){
-        return linktagService.searchArticle(tagName);
+    public RespModel search(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize,@RequestParam String tagName){
+        PageHelper.startPage(pageNum,pageSize);
+        RespModel respModel = linktagService.searchArticle(tagName);
+        if(respModel.getCode()!="200"){
+            return respModel;
+        }
+        //获取标签
+        List<ArticleEntity> list = (List<ArticleEntity>)respModel.getData();
+        for (ArticleEntity articleEntity : list) {
+            articleEntity.setTags((List<TagEntity>) linktagService.getArticleClass(articleEntity.getId()).getData());
+        }
+        return respModel;
     }
 
     /**根据标签id获取文章的总数*/
-    @GetMapping("/searchTotal")
+    @GetMapping("/search/sum")
     public RespModel searchTotal(@RequestParam String tagName){
         return linktagService.searchArticleTotal(tagName);
     }

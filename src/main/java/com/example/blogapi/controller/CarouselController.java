@@ -35,6 +35,7 @@ public class CarouselController {
     public RespModel add(@RequestBody CarouselEntity carouselEntity){
         return carouselService.addCarousel(carouselEntity);
     }
+    /**获得所有轮播图*/
     @GetMapping("/pull")
     public RespModel pullCarousel(){
         return carouselService.pullCarousel();

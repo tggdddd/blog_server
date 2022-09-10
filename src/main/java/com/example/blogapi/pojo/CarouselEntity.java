@@ -22,5 +22,5 @@ public class CarouselEntity implements Serializable {
 
 	private Integer num;
 
-
+	private String title;
 }
