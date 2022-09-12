@@ -21,23 +21,24 @@ import javax.annotation.Resource;
 public class GradeController {
     @Resource
     GradeService gradeService;
+
     @GetMapping("/add")
-    public RespModel addGrade(@RequestParam(name = "id") int articleId){
+    public RespModel addGrade(@RequestParam(name = "id") int articleId) {
         return gradeService.addGrade(articleId);
     }
 
-    @GetMapping("/delete")
-    public RespModel deleteGrade(@RequestParam(name = "id") int articleId){
-        return gradeService.deleteGrade(articleId);
-    }
+    // @GetMapping("/delete")
+    // public RespModel deleteGrade(@RequestParam(name = "id") int articleId){
+    //     return gradeService.deleteGrade(articleId);
+    // }
 
     @GetMapping("/update")
-    public RespModel updateGrade(@RequestParam(name = "id") int articleId,@RequestParam(name = "grade")int point){
-        return gradeService.updateGrade(articleId,point);
+    public RespModel updateGrade(@RequestParam(name = "id") int articleId, @RequestParam(name = "grade") int point) {
+        return gradeService.updateGrade(articleId, point);
     }
 
     @GetMapping("/get")
-    public RespModel getGrade(@RequestParam(name = "id") int articleId){
+    public RespModel getGrade(@RequestParam(name = "id") int articleId) {
         return gradeService.getGrade(articleId);
     }
 }

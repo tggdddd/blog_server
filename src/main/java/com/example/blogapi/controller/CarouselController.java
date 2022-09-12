@@ -1,14 +1,8 @@
 package com.example.blogapi.controller;
 
-import com.example.blogapi.pojo.CarouselEntity;
-import com.example.blogapi.pojo.TagEntity;
 import com.example.blogapi.resp.RespModel;
 import com.example.blogapi.service.CarouselService;
-import com.example.blogapi.service.TagService;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,13 +25,16 @@ public class CarouselController {
      * @param carouselEntity
      * @return
      */
-    @PostMapping("/add")
-    public RespModel add(@RequestBody CarouselEntity carouselEntity){
-        return carouselService.addCarousel(carouselEntity);
-    }
-    /**获得所有轮播图*/
+    // @PostMapping("/add")
+    // public RespModel add(CarouselEntity carouselEntity){
+    //     return carouselService.addCarousel(carouselEntity);
+    // }
+
+    /**
+     * 获得所有轮播图
+     */
     @GetMapping("/pull")
-    public RespModel pullCarousel(){
+    public RespModel pullCarousel() {
         return carouselService.pullCarousel();
     }
 
@@ -46,16 +43,16 @@ public class CarouselController {
      * @param id
      * @return
      */
-    @GetMapping("/delete/{id}")
-    public RespModel findByLinkId(@PathVariable int id){
-        return carouselService.deleteCarousel(id);
-    }
+    // @PostMapping("/delete")
+    // public RespModel findByLinkId(Integer id){
+    //     return carouselService.deleteCarousel(id);
+    // }
 
     /**
      * 通过文章ID修改轮播图
      */
-    @PostMapping("/update")
-    public RespModel updateTag(@RequestBody CarouselEntity carouselEntity){
-        return carouselService.updateCarousel(carouselEntity);
-    }
+    // @PostMapping("/update")
+    // public RespModel updateTag(CarouselEntity carouselEntity){
+    //     return carouselService.updateCarousel(carouselEntity);
+    // }
 }
