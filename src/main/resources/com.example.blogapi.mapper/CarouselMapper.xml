@@ -5,14 +5,14 @@
 
     <insert id="addCarouselEntity">
         INSERT
-        INTO springbootmanager.carousel(href, src, num,title)
-        values (#{href}, #{src}, #{num},#{title})
+        INTO springbootmanager.carousel(href, src, priority, title)
+        values (#{href}, #{src}, #{priority}, #{title})
     </insert>
     <update id="updateCarousel">
         UPDATE springbootmanager.carousel
         SET href=#{href},
             src=#{src},
-            num=#{num},
+            priority=#{priority},
             title=#{title}
         WHERE id = #{id}
     </update>
@@ -22,8 +22,8 @@
         WHERE id = #{id}
     </delete>
     <select id="pullCarsousel" resultType="com.example.blogapi.pojo.CarouselEntity">
-        SELECT id,href,src,num,title
+        SELECT id, href, src, priority, title
         FROM springbootmanager.carousel
-        order by num asc
+        order by priority asc
     </select>
 </mapper>

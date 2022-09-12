@@ -13,21 +13,48 @@ public interface CommentMapper {
 
     /**
      * 通过评论的id删除评论
+     *
      * @param id
      */
     int deleteCommentById(int id);
 
     /**
+     * 通过文章的id查询第一层评论
+     *
+     * @param articleId
+     */
+    List<CommentEntity> findFirstCommentByArticleId(int articleId);
+
+    /**
      * 通过文章的id查询评论
+     *
      * @param articleId
      */
     List<CommentEntity> findCommentByArticleId(int articleId);
 
     /**
+     * 通过文章的id查询评论的总数
+     *
+     * @param articleId
+     */
+    int findCommentByArticleIdTotal(int articleId);
+
+    /**
      * 通过评论的id查询子评论
+     *
      * @param commentId
      */
     List<CommentEntity> findCommentByCommentId(int commentId);
+
+    /**
+     * 获取所有评论
+     */
+    List<CommentEntity> pullComment();
+
+    /**
+     * 获取所有评论的总数
+     */
+    int pullCommentTotal();
     /**
      * 评论的子评论 保留
      */

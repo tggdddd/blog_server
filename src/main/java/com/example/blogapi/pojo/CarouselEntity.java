@@ -20,7 +20,7 @@ public class CarouselEntity implements Serializable {
 
 	private String src;
 
-	private Integer num;
+	private Integer priority;
 
 	private String title;
 }

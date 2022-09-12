@@ -1,10 +1,7 @@
 package com.example.blogapi.service.impl;
 
 import com.example.blogapi.mapper.CarouselMapper;
-import com.example.blogapi.mapper.TagMapper;
-import com.example.blogapi.pojo.ArticleEntity;
 import com.example.blogapi.pojo.CarouselEntity;
-import com.example.blogapi.pojo.TagEntity;
 import com.example.blogapi.resp.RespCode;
 import com.example.blogapi.resp.RespModel;
 import com.example.blogapi.service.CarouselService;
@@ -40,7 +37,7 @@ public class CarouselServiceImpl implements CarouselService {
         if(carouselMapper.updateCarousel(carouselEntity)!=0){
             return new RespModel(RespCode.SUCCESS,carouselEntity);
         }
-        return new RespModel(RespCode.FAILURE,null);
+        return new RespModel(RespCode.FAILURE, carouselEntity);
     }
 
     @Override

@@ -1,9 +1,7 @@
 package com.example.blogapi.service.impl;
 
 import com.example.blogapi.mapper.CommentMapper;
-import com.example.blogapi.mapper.LinktagMapper;
 import com.example.blogapi.pojo.CommentEntity;
-import com.example.blogapi.pojo.LinktagEntity;
 import com.example.blogapi.resp.RespCode;
 import com.example.blogapi.resp.RespModel;
 import com.example.blogapi.service.CommentService;
@@ -61,33 +59,61 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public RespModel findCommentByCommentId(int commentId) {
         List<CommentEntity> list = commentMapper.findCommentByCommentId(commentId);
-        if(list!=null){
-            return new RespModel(RespCode.SUCCESS,list);
+        if (list != null) {
+            return new RespModel(RespCode.SUCCESS, list);
         }
-        return new RespModel(RespCode.FAILURE,null);
+        return new RespModel(RespCode.FAILURE, null);
+    }
+
+    @Override
+    public RespModel findFirstCommentByArticleId(int articleId) {
+        List<CommentEntity> list = commentMapper.findFirstCommentByArticleId(articleId);
+        if (list != null) {
+            // 获取子评论
+            for (CommentEntity commentEntity : list) {
+                getSubComment(commentEntity, commentEntity);
+            }
+            return new RespModel(RespCode.SUCCESS, list);
+        }
+        return new RespModel(RespCode.FAILURE, null);
     }
 
     @Override
     public RespModel findCommentByArticleId(int articleId) {
         List<CommentEntity> list = commentMapper.findCommentByArticleId(articleId);
-        if(list!=null){
-            //获取子评论
-            for (CommentEntity commentEntity : list) {
-                getSubComment(commentEntity,commentEntity);
-            }
-            return new RespModel(RespCode.SUCCESS,list);
-        }
-        return new RespModel(RespCode.FAILURE,null);
+        return new RespModel(RespCode.SUCCESS, list);
     }
-    public void getSubComment(CommentEntity target,CommentEntity parent){
-        //获取children对象
+
+    @Override
+    public RespModel findCommentByArticleIdTotal(int articleId) {
+        Integer res = commentMapper.findCommentByArticleIdTotal(articleId);
+        return new RespModel(RespCode.SUCCESS, res);
+    }
+
+    @Override
+    public RespModel pullComment() {
+        List<CommentEntity> list = commentMapper.pullComment();
+        if (list != null) {
+            return new RespModel(RespCode.SUCCESS, list);
+        }
+        return new RespModel(RespCode.FAILURE, null);
+    }
+
+    @Override
+    public RespModel pullCommentTotal() {
+        Integer res = commentMapper.pullCommentTotal();
+        return new RespModel(RespCode.SUCCESS, res);
+    }
+
+    public void getSubComment(CommentEntity target, CommentEntity parent) {
+        // 获取children对象
         List<CommentEntity> list = parent.getChildren();
-        if(list==null){
+        if (list == null) {
             list = new ArrayList<>();
             parent.setChildren(list);
         }
-        //获取子评论
-        List<CommentEntity> subList =(List<CommentEntity>) findCommentByCommentId(target.getId()).getData();
+        // 获取子评论
+        List<CommentEntity> subList = (List<CommentEntity>) findCommentByCommentId(target.getId()).getData();
         //遍历添加子评论
         for (CommentEntity commentEntity : subList) {
             list.add(commentEntity);

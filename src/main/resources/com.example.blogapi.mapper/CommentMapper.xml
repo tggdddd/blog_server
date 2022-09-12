@@ -19,6 +19,31 @@
         FROM springbootmanager.comment
         WHERE id = #{id}
     </delete>
+    <select id="findFirstCommentByArticleId" resultMap="commentFix">
+        SELECT id,
+               email,
+               name,
+               `describe`,
+               content,
+               date,
+               parentId,
+               articleId
+        from springbootmanager.comment
+        WHERE articleId = #{articleId}
+          and parentId = -1
+        order by date desc
+    </select>
+    <resultMap id="commentFix" type="com.example.blogapi.pojo.CommentEntity">
+        <result property="articleId" column="articleId"/>
+        <result property="email" column="email"/>
+        <result property="content" column="content"/>
+        <result property="date" column="date"/>
+        <result property="describe" column="`describe`"/>
+        <result property="articleId" column="articleId"/>
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+
+    </resultMap>
     <select id="findCommentByArticleId" resultType="com.example.blogapi.pojo.CommentEntity">
         SELECT id,
                email,
@@ -30,7 +55,12 @@
                articleId
         from springbootmanager.comment
         WHERE articleId = #{articleId}
-          and parentId = -1 order by date desc;
+        ORDER BY date DESC
+    </select>
+    <select id="findCommentByArticleIdTotal" resultType="java.lang.Integer">
+        SELECT COUNT(id)
+        from springbootmanager.comment
+        WHERE articleId = #{articleId}
     </select>
     <select id="findCommentByCommentId" resultType="com.example.blogapi.pojo.CommentEntity">
         SELECT id,
@@ -42,6 +72,24 @@
                parentId,
                articleId
         from springbootmanager.comment
-        WHERE parentId = #{commentId} order by date desc;
+        WHERE parentId = #{commentId}
+        order by date desc
     </select>
+
+    <select id="pullCommentTotal" resultType="java.lang.Integer">
+        SELECT COUNT(id) as total
+        from springbootmanager.comment
+    </select>
+    <select id="pullComment" resultType="com.example.blogapi.pojo.CommentEntity">
+        SELECT id,
+               email,
+               name,
+               `describe`,
+               content,
+               date,
+               parentId,
+               articleId
+        from springbootmanager.comment
+    </select>
+
 </mapper>

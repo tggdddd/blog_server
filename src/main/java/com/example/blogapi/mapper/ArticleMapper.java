@@ -1,8 +1,6 @@
 package com.example.blogapi.mapper;
 
 import com.example.blogapi.pojo.ArticleEntity;
-import com.example.blogapi.pojo.TagEntity;
-import com.example.blogapi.service.ArticleService;
 
 import java.util.List;
 
@@ -38,6 +36,7 @@ public interface ArticleMapper {
      */
     int findAllTotal();
 
+    String getTitle(int id);
 
     /**
      * 通过文章ID修改文章

@@ -27,13 +27,16 @@ public class CommentEntity implements Serializable {
 
 	private String content;
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private Date date;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date date;
 
-	private int parentId;
-	
-	private int articleId;
+    private int parentId;
 
-	//子评论
-	private List<CommentEntity> children;
+    private int articleId;
+
+    // 子评论
+    private List<CommentEntity> children;
+
+    // 文章的标题 管理页面使用
+    private String title;
 }

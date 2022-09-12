@@ -81,4 +81,9 @@
         FROM springbootmanager.article
         WHERE id = #{id}
     </select>
+    <select id="getTitle" resultType="java.lang.String">
+        SELECT title
+        FROM springbootmanager.article
+        WHERE id = #{id}
+    </select>
 </mapper>
