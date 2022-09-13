@@ -21,14 +21,17 @@ public class ArticleEntity implements Serializable {
 	private String title;
 
 	private String author;
-	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-	private Date date;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date date;
 
 
-	private String content;
+    private String content;
 
-	private Integer browse;
+    private Integer browse;
 
-	//额外的属性
-	private List<TagEntity> tags;
+    // 额外的属性
+    private List<TagEntity> tags;
+
+    // 额外属性 admin
+    private GradeEntity grade;
 }

@@ -3,8 +3,6 @@ package com.example.blogapi.service;
 import com.example.blogapi.pojo.ArticleEntity;
 import com.example.blogapi.resp.RespModel;
 
-import java.util.List;
-
 public interface ArticleService {
 
     /**
@@ -46,14 +44,24 @@ public interface ArticleService {
      */
     RespModel updateArticle(ArticleEntity article);
 
-    /**获得热点文章前十
+    /**
+     * 获得热点文章前十
      */
     RespModel getHots();
 
-    /**获得文章的详情*/
+    /**
+     * 获得文章的详情
+     */
     RespModel getArticle(int id);
 
-    /**增加浏览次数*/
+    /**
+     * 增加浏览次数
+     */
     void increase(int id);
+
+    /**
+     * 删除文章
+     */
+    RespModel deleteArticle(int id);
 }
 

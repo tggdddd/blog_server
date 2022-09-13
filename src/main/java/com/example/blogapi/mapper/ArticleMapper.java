@@ -49,10 +49,18 @@ public interface ArticleMapper {
      */
     List<ArticleEntity> getHots();
 
-    /**通过id获得文章
-     * */
+    /**
+     * 通过id获得文章
+     */
     ArticleEntity getArticle(int id);
 
-    /**增加浏览的次数*/
+    /**
+     * 增加浏览的次数
+     */
     void increase(int id);
+
+    /**
+     * 删除文章
+     */
+    int deleteArticle(int id);
 }

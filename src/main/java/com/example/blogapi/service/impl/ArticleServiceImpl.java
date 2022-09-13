@@ -13,8 +13,18 @@ import java.util.List;
 @Service
 public class ArticleServiceImpl implements ArticleService {
 
+
     @Resource
     private ArticleMapper articleMapper;
+
+    @Override
+    public RespModel deleteArticle(int id) {
+        int res = articleMapper.deleteArticle(id);
+        if (res != 0) {
+            return new RespModel(RespCode.SUCCESS, res);
+        }
+        return new RespModel(RespCode.FAILURE, res);
+    }
 
     /**
      * 获得文章

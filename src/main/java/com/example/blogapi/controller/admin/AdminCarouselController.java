@@ -49,7 +49,7 @@ public class AdminCarouselController {
      * @return
      */
     @PostMapping("/delete")
-    public RespModel findByLinkId(Integer id) {
+    public RespModel deleteCarousel(Integer id) {
         return carouselService.deleteCarousel(id);
     }
 

@@ -6,7 +6,6 @@ import com.example.blogapi.pojo.TagEntity;
 import com.example.blogapi.resp.RespCode;
 import com.example.blogapi.resp.RespModel;
 import com.example.blogapi.service.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,19 +26,31 @@ public class TagServiceImpl  implements TagService {
     @Override
     public RespModel getAllTag() {
         List<TagEntity> list = tagMapper.getAllTag();
-        if(list!=null){
-            return new RespModel(RespCode.SUCCESS,list);
+        if (list != null) {
+            return new RespModel(RespCode.SUCCESS, list);
         }
-        return new RespModel(RespCode.FAILURE,null);
+        return new RespModel(RespCode.FAILURE, null);
+    }
+
+    @Override
+    public RespModel removeTag(int id) {
+        int res = tagMapper.deleteTag(id);
+        if (res != 0) {
+            return new RespModel(RespCode.SUCCESS, res);
+        } else {
+            RespModel respModel = new RespModel(RespCode.FAILURE, res);
+            respModel.setMsg("存在文章使用此标签");
+            return respModel;
+        }
     }
 
     @Override
     public RespModel findByLinkId(int id) {
         List<TagEntity> list = tagMapper.findByLinkId(id);
-        if(list!=null){
-            return new RespModel(RespCode.SUCCESS,list);
+        if (list != null) {
+            return new RespModel(RespCode.SUCCESS, list);
         }
-        return new RespModel(RespCode.FAILURE,null);
+        return new RespModel(RespCode.FAILURE, null);
     }
 
     @Override

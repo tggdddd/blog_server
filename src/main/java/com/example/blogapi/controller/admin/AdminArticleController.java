@@ -1,15 +1,18 @@
 package com.example.blogapi.controller.admin;
 
 import com.example.blogapi.pojo.ArticleEntity;
+import com.example.blogapi.pojo.GradeEntity;
+import com.example.blogapi.pojo.LinktagEntity;
 import com.example.blogapi.pojo.TagEntity;
+import com.example.blogapi.pojo.TagsId;
 import com.example.blogapi.resp.RespModel;
 import com.example.blogapi.service.ArticleService;
+import com.example.blogapi.service.GradeService;
 import com.example.blogapi.service.LinktagService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,14 +31,40 @@ public class AdminArticleController {
     private ArticleService articleService;
     @Resource
     private LinktagService linktagService;
+    @Resource
+    private GradeService gradeService;
 
     /**
      * 添加文章
+     *
+     * @param article 包括 title author content
      */
     @PostMapping("/add")
-    public RespModel addArticle(@RequestBody ArticleEntity article) {
+    public RespModel addArticle(ArticleEntity article, TagsId tagsId) {
         article.setDate(new Date());
-        return articleService.addArticle(article);
+        RespModel respModel = articleService.addArticle(article);
+        // 返回插入的id
+        int id = article.getId();
+        if (id == 0) {
+            return respModel;
+        }
+        // 添加文章的关联标签
+        for (Integer tagId : tagsId.getTagsId()) {
+            linktagService.addLinkTag(new LinktagEntity(-1, id, tagId));
+        }
+        // 添加对映的评分表
+        gradeService.addGrade(id);
+        return respModel;
+    }
+
+    /**
+     * 删除文章
+     *
+     * @param id 文章id
+     */
+    @PostMapping("/delete")
+    public RespModel deleteArticle(Integer id) {
+        return articleService.deleteArticle(id);
     }
 
     /**
@@ -59,9 +88,14 @@ public class AdminArticleController {
      */
     @GetMapping("/detail")
     public RespModel getArticle(@RequestParam int id) {
-        // 增加浏览次数
-        articleService.increase(id);
-        return articleService.getArticle(id);
+        RespModel respModel = articleService.getArticle(id);
+        if (respModel.getCode() != "200") {
+            return respModel;
+        }
+        ArticleEntity articleEntity = (ArticleEntity) respModel.getData();
+        // 获取标签
+        articleEntity.setTags((List<TagEntity>) linktagService.getArticleClass(articleEntity.getId()).getData());
+        return respModel;
     }
 
     /**
@@ -74,10 +108,13 @@ public class AdminArticleController {
         if (respModel.getCode() != "200") {
             return respModel;
         }
-        // 获取标签
+        // 逐个处理每篇文章
         List<ArticleEntity> list = (List<ArticleEntity>) respModel.getData();
         for (ArticleEntity articleEntity : list) {
+            // 获取标签
             articleEntity.setTags((List<TagEntity>) linktagService.getArticleClass(articleEntity.getId()).getData());
+            // 获取评分
+            articleEntity.setGrade((GradeEntity) gradeService.getGrade(articleEntity.getId()).getData());
         }
         return respModel;
     }
@@ -102,8 +139,19 @@ public class AdminArticleController {
      * 通过文章ID修改文章
      */
     @PostMapping("/update")
-    public RespModel updateArticle(@RequestBody ArticleEntity article) {
-        return articleService.updateArticle(article);
+    public RespModel updateArticle(ArticleEntity article, TagsId tagsId) {
+        RespModel respModel = articleService.updateArticle(article);
+        int id = article.getId();
+        if (id == 0) {
+            return respModel;
+        }
+        // 修改文章的关联标签
+        // 先删除再增加
+        linktagService.removeArticleTags(id);
+        for (Integer tagId : tagsId.getTagsId()) {
+            linktagService.addLinkTag(new LinktagEntity(-1, id, tagId));
+        }
+        return respModel;
     }
 
 }

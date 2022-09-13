@@ -13,9 +13,14 @@
             color = #{color}
         WHERE id = #{id}
     </update>
+    <delete id="deleteTag">
+        DELETE
+        FROM springbootmanager.tag
+        WHERE id = #{id}
+    </delete>
 
     <select id="findByLinkId" parameterType="int" resultType="com.example.blogapi.pojo.TagEntity">
-        SELECT id,tag,color
+        SELECT id, tag, color
         FROM tag
         WHERE id = #{id}
     </select>

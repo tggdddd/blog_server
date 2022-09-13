@@ -13,12 +13,18 @@
         WHERE tagId = #{tagId}
           and articleId = #{articleId}
     </delete>
+    <delete id="removeArticleTags">
+        DELETE
+        FROM linktag
+        WHERE articleId = #{articleId}
+    </delete>
+
     <select id="searchArticle" resultType="com.example.blogapi.pojo.ArticleEntity">
         SELECT id,
                title,
                author,
             date,
-            SUBSTRING(content, 1, 300) as content
+            SUBSTRING (content, 1, 300) as content
         FROM article
         WHERE article.id IN (
             SELECT articleId

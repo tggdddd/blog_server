@@ -45,14 +45,19 @@ public class LinktagServiceImpl implements LinktagService {
     public RespModel searchArticle(String tagName) {
         List<ArticleEntity> list = linktagMapper.searchArticle(tagName);
         if(list != null){
-            return new RespModel(RespCode.SUCCESS,list);
+            return new RespModel(RespCode.SUCCESS, list);
         }
-        return new RespModel(RespCode.FAILURE,null);
+        return new RespModel(RespCode.FAILURE, null);
     }
 
     @Override
     public RespModel searchArticleTotal(String tagName) {
-        int res =  linktagMapper.searchArticleTotal(tagName);
-        return new RespModel(RespCode.SUCCESS,res);
+        int res = linktagMapper.searchArticleTotal(tagName);
+        return new RespModel(RespCode.SUCCESS, res);
+    }
+
+    @Override
+    public int removeArticleTags(int articleId) {
+        return linktagMapper.removeArticleTags(articleId);
     }
 }

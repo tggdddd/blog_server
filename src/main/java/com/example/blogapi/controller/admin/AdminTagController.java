@@ -41,4 +41,13 @@ public class AdminTagController {
         return tagService.updateTag(tagEntity);
     }
 
+    /**
+     * 删除标题
+     *
+     * @param id Id
+     */
+    @PostMapping("/delete")
+    public RespModel deleteTag(int id) {
+        return tagService.removeTag(id);
+    }
 }

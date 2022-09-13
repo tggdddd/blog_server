@@ -3,7 +3,8 @@
 
 <mapper namespace="com.example.blogapi.mapper.ArticleMapper">
     <!--    添加文章-->
-    <insert id="addArticle" parameterType="com.example.blogapi.pojo.ArticleEntity">
+    <insert id="addArticle" parameterType="com.example.blogapi.pojo.ArticleEntity" keyColumn="id" keyProperty="id"
+            useGeneratedKeys="true">
         INSERT INTO springbootmanager.article(title,
                                               author,
                                               date,
@@ -16,15 +17,19 @@
         UPDATE springbootmanager.article
         SET title   = #{title},
             author  = #{author},
-            date    = #{date},
             content = #{content}
         WHERE id = #{id}
     </update>
     <update id="increase">
         UPDATE springbootmanager.article
-        SET browse=browse+1
-        WHERE id=#{id}
+        SET browse=browse + 1
+        WHERE id = #{id}
     </update>
+    <delete id="deleteArticle">
+        DELETE
+        FROM springbootmanager.article
+        WHERE id = #{id}
+    </delete>
 
     <!--    获得所有文章-->
     <select id="findAll" resultType="com.example.blogapi.pojo.ArticleEntity">
@@ -35,6 +40,7 @@
                SUBSTRING(content, 1, 300) as content,
                browse
         FROM springbootmanager.article
+        order by date desc
     </select>
     <select id="findByTitleTotal" resultType="java.lang.Integer">
         SELECT COUNT(id) as total

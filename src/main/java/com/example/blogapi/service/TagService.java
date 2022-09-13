@@ -1,10 +1,7 @@
 package com.example.blogapi.service;
 
-import com.example.blogapi.pojo.ArticleEntity;
 import com.example.blogapi.pojo.TagEntity;
 import com.example.blogapi.resp.RespModel;
-
-import java.util.List;
 
 public interface TagService  {
 
@@ -28,7 +25,14 @@ public interface TagService  {
      */
     RespModel updateTag(TagEntity tagEntity);
 
-    /**获得所有标签*/
+    /**
+     * 获得所有标签
+     */
     RespModel getAllTag();
+
+    /**
+     * 删除标签
+     */
+    RespModel removeTag(int id);
 }
 
