@@ -11,7 +11,6 @@ import com.example.blogapi.service.GradeService;
 import com.example.blogapi.service.LinktagService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -70,16 +69,29 @@ public class AdminArticleController {
     /**
      * 通过文章标题模糊查询
      */
-    @GetMapping("/search/{title}")
-    public RespModel findByTitle(@PathVariable String title) {
-        return articleService.findByTitle(title);
+    @GetMapping("/search")
+    public RespModel findByTitle(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize, String title) {
+        PageHelper.startPage(pageNum, pageSize);
+        RespModel respModel = articleService.findByTitle(title);
+        if (respModel.getCode() != "200") {
+            return respModel;
+        }
+        // 逐个处理每篇文章
+        List<ArticleEntity> list = (List<ArticleEntity>) respModel.getData();
+        for (ArticleEntity articleEntity : list) {
+            // 获取标签
+            articleEntity.setTags((List<TagEntity>) linktagService.getArticleClass(articleEntity.getId()).getData());
+            // 获取评分
+            articleEntity.setGrade((GradeEntity) gradeService.getGrade(articleEntity.getId()).getData());
+        }
+        return respModel;
     }
 
     /**
      * 通过文章标题模糊查询的总数
      */
-    @GetMapping("/search/{title}/sum")
-    public RespModel findByTitleTotal(@PathVariable String title) {
+    @GetMapping("/search/sum")
+    public RespModel findByTitleTotal(String title) {
         return articleService.findByTitleTotal(title);
     }
 

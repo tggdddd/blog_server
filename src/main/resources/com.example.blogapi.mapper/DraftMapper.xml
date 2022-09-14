@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.blogapi.mapper.DraftMapper">
+    <!--    添加文章-->
+    <insert id="addArticle" parameterType="com.example.blogapi.pojo.DraftEntity" keyColumn="id" keyProperty="id"
+            useGeneratedKeys="true">
+        INSERT INTO springbootmanager.draft(title,
+                                            author,
+                                            date,
+                                            content)
+        VALUES (#{title}, #{author}, #{date}, #{content})
+    </insert>
+
+    <!--更新文章-->
+    <update id="updateArticle" parameterType="com.example.blogapi.pojo.DraftEntity">
+        UPDATE springbootmanager.draft
+        SET title   = #{title},
+            author  = #{author},
+            content = #{content}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteArticle">
+        DELETE
+        FROM springbootmanager.draft
+        WHERE id = #{id}
+    </delete>
+
+    <!--    获得所有文章-->
+    <select id="findAll" resultType="com.example.blogapi.pojo.DraftEntity">
+        SELECT id,
+               title,
+               author,
+               date,
+               SUBSTRING(content, 1, 300) as content
+        FROM springbootmanager.draft
+        order by date desc
+    </select>
+
+    <!--    获得文章内容-->
+    <select id="getArticle" resultType="com.example.blogapi.pojo.DraftEntity">
+        SELECT id,
+               title,
+               author,
+               date,
+               content
+        FROM springbootmanager.draft
+        WHERE id = #{id}
+    </select>
+
+</mapper>
