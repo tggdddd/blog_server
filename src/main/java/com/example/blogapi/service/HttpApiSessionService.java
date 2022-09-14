@@ -26,7 +26,7 @@ public class HttpApiSessionService {
 
     public static final String SUBJECT = "onehee";
 
-    public static final long EXPIRE = 1000 * 60 * 60 * 24 * 30;  // 过期时间，毫秒，一个月
+    public static final long EXPIRE = 1000 * 60 * 60 * 24;  // 过期时间，毫秒，一小时
 
     // 秘钥
     public static final String APPSECRET = "onehee666";
@@ -47,10 +47,8 @@ public class HttpApiSessionService {
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
                 .signWith(SignatureAlgorithm.HS256, APPSECRET).compact();
-
         return token;
     }
-
 
     /**
      * 校验token
@@ -59,7 +57,6 @@ public class HttpApiSessionService {
      * @return
      */
     public Claims checkJWT(String token) {
-
         try {
             final Claims claims = Jwts.parser().setSigningKey(APPSECRET).
                     parseClaimsJws(token).getBody();

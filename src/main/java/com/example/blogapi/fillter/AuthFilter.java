@@ -1,6 +1,6 @@
 package com.example.blogapi.fillter;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.blogapi.resp.RespCode;
 import com.example.blogapi.resp.RespModel;
 import com.example.blogapi.service.HttpApiSessionService;
@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Objects;
 
 import static com.example.blogapi.service.HttpApiSessionService.USER_ID_KEY;
 import static com.example.blogapi.service.HttpApiSessionService.USER_USERNAME_KEY;
@@ -44,11 +45,14 @@ public class AuthFilter implements Filter {
         resp.setHeader("Access-Control-Allow-Credentials", "true");
         resp.setHeader("Access-Control-Allow-Methods", "POST, GET, PATCH, DELETE, PUT");
         resp.setHeader("Access-Control-Allow-Headers", "*");
+        log.info(req.getMethod());
+        if (Objects.equals(req.getMethod(), "OPTIONS")) {
+            return;
+        }
         String url = req.getRequestURI();
-        log.info("url:{}", url);
-        chain.doFilter(request, response);
         if (Arrays.asList(whiteList).contains(url)) {
             chain.doFilter(request, response);
+            return;
         } else {
             // 拦截接口
             // 从header中获取token
@@ -59,19 +63,21 @@ public class AuthFilter implements Filter {
             }
             // token为空返回
             if (token == null || StringUtils.trimAllWhitespace(token).length() == 0) {
-                responseResult(resp, new RespModel(RespCode.FAILURE, "token不能为空"));
+                responseResult(resp, new RespModel(RespCode.PERMISSION_ERROR, "token不能为空"));
+                return;
             }
             //  校验并解析token，如果token过期或者篡改，则会返回null
             Claims claims = httpApiSessionService.checkJWT(token);
             if (null == claims) {
-                responseResult(resp, new RespModel(RespCode.FAILURE, "登陆失效， 请重新登陆"));
+                responseResult(resp, new RespModel(RespCode.TOKEN_FAIL, "登陆失效， 请重新登陆"));
+                return;
             }
             // TODO 校验用户状态等
-
 
             //  校验通过后，设置用户信息到request里，在Controller中从Request域中获取用户信息
             request.setAttribute(USER_ID_KEY, claims.get(USER_ID_KEY));
             request.setAttribute(USER_USERNAME_KEY, claims.get(USER_USERNAME_KEY));
+            chain.doFilter(request, response);
         }
 
     }
@@ -87,7 +93,7 @@ public class AuthFilter implements Filter {
         response.setHeader("Content-type", "application/json;charset=UTF-8");
         response.setStatus(200);
         try {
-            response.getWriter().write(JSON.toJSONString(result));
+            response.getWriter().write(JSONObject.toJSONString(result));
         } catch (IOException ex) {
             log.error(ex.getMessage());
         }
