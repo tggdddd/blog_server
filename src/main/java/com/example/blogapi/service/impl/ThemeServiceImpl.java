@@ -30,11 +30,36 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public RespModel addThemes(Map map) {
-        return new RespModel(RespCode.SUCCESS, themeMapper.insertTheme(map));
+        int i = themeMapper.insertTheme(map);
+        if (i == 1) {
+            return new RespModel(RespCode.SUCCESS, i);
+        } else {
+            return new RespModel(RespCode.FAILURE, i);
+        }
+
     }
 
     @Override
     public RespModel love(int id) {
         return new RespModel(RespCode.SUCCESS, themeMapper.love(id));
+    }
+
+    @Override
+    public RespModel deleteTheme(int id) {
+        int res = themeMapper.deleteTheme(id);
+        if (res == 1) {
+            return new RespModel(RespCode.SUCCESS, res);
+        }
+        return new RespModel(RespCode.FAILURE, res);
+    }
+
+    @Override
+    public RespModel update(Map map) {
+        int res = themeMapper.insertTheme(map);
+        if (res == 1) {
+            themeMapper.deleteTheme(Integer.parseInt((String) map.get("id")));
+            return new RespModel(RespCode.SUCCESS, res);
+        }
+        return new RespModel(RespCode.FAILURE, res);
     }
 }

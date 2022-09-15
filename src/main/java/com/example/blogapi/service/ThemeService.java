@@ -26,5 +26,15 @@ public interface ThemeService {
      * 增加love次数1
      */
     public RespModel love(int id);
+
+    /**
+     * 删除
+     */
+    public RespModel deleteTheme(int id);
+
+    /**
+     * 修改
+     */
+    public RespModel update(Map map);
 }
 
