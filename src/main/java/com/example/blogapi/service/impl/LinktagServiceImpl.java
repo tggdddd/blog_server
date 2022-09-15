@@ -44,7 +44,11 @@ public class LinktagServiceImpl implements LinktagService {
     @Override
     public RespModel searchArticle(String tagName) {
         List<ArticleEntity> list = linktagMapper.searchArticle(tagName);
-        if(list != null){
+        for (ArticleEntity re : list) {
+            String content = re.getContent();
+            re.setContent(content.replaceAll("<.*?>", " "));
+        }
+        if (list != null) {
             return new RespModel(RespCode.SUCCESS, list);
         }
         return new RespModel(RespCode.FAILURE, null);

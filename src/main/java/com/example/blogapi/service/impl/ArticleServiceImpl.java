@@ -53,6 +53,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public RespModel findByTitle(String title) {
         List<ArticleEntity> res = articleMapper.findByTitle(title);
+        for (ArticleEntity re : res) {
+            String content = re.getContent();
+            re.setContent(content.replaceAll("<.*?>", " "));
+        }
         if (res != null) {
             return new RespModel(RespCode.SUCCESS, res);
         }
@@ -75,6 +79,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public RespModel findAll() {
         List<ArticleEntity> res = articleMapper.findAll();
+        for (ArticleEntity re : res) {
+            String content = re.getContent();
+            re.setContent(content.replaceAll("<.*?>", " "));
+        }
         if (res != null) {
             return new RespModel(RespCode.SUCCESS, res);
         }

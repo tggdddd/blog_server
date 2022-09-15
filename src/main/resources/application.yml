@@ -1,4 +1,3 @@
-
 server:
   port: 8081
 
@@ -9,13 +8,24 @@ spring:
     url: jdbc:mysql://localhost:3306/springbootmanager?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2b8
     password: 123456
     #hikari
-#    hikari:
-#      connection-init-sql: select 1
-#      minimum-idle: 5
-#      maximum-pool-size: 50
+    hikari:
+      connection-init-sql: select 1
+      minimum-idle: 5
+      maximum-pool-size: 50
+    #邮箱
+  mail:
+    host: smtp.qq.com
+    username: 1425187931@qq.com
+    #SMT授权码
+    password: vfsgflogppezhiaj
+    port: 25
+    protocol: smtp
+    default-encoding: UTF-8
+
 mybatis:
   mapper-locations: classpath:com.example.blogapi.mapper/**/*.xml
 
 #logging:
 #  level:
 #    com.example.blogapi.mapper: DEBUG
+

@@ -14,4 +14,6 @@ public interface SumMapper {
      * 获得网站总的信息
      */
     SumEntity getSum();
+
+    Integer getCommentTotal();
 }

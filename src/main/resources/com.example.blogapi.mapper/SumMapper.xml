@@ -4,8 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.blogapi.mapper.SumMapper">
     <select id="getSum" resultType="com.example.blogapi.pojo.SumEntity">
-        SELECT SUM(browse) as visitTotal, SUM(article.id) as articleTotal, SUM(comment.id) as commentTotal
-        FROM springbootmanager.article as article,
-             springbootmanager.comment
+        SELECT SUM(browse) as visitTotal, SUM(id) as articleTotal
+        FROM springbootmanager.article
+    </select>
+    <select id="getCommentTotal" resultType="Integer">
+        SELECT SUM(id) as commentTotal
+        FROM springbootmanager.comment
     </select>
 </mapper>

@@ -62,4 +62,8 @@ public interface CommentMapper {
     /**
      * 删除文章的评论 保留
      */
+    /**
+     * 通过评论ID获得邮箱
+     */
+    String getEmail(int id);
 }

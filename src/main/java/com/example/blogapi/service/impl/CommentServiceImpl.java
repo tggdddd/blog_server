@@ -100,6 +100,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public String getEmail(int id) {
+        return commentMapper.getEmail(id);
+    }
+
+    @Override
     public RespModel pullCommentTotal() {
         Integer res = commentMapper.pullCommentTotal();
         return new RespModel(RespCode.SUCCESS, res);

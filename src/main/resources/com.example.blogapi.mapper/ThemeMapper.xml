@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.blogapi.mapper.ThemeMapper">
+    <select id="getThemes" resultType="java.util.Map">
+        SELECT *
+        FROM springbootmanager.theme
+    </select>
+
+    <insert id="insertTheme" parameterType="map">
+        insert into theme (author, `name`,
+        `--nav-main-text-color`, `--el-menu-active-color`, `--el-border-color`,
+        `--footer-bg-color`, `--body-bg-color`, `--el-fill-color-blank`,
+        `--el-border-color-light`, `--el-color-primary`, `--el-color-white`,
+        `--tag-text-color`, `--el-text-color-primary`, `--content-text-color`,
+        `--content-descript-text-color`, `--comment-bg-color`,
+        `--comment-text-color`, `--comment-content-color`,
+        `--article-describe-text-color`, `--article-divider-color`,
+        `--article-diver-color`)
+        values (#{author},#{name},
+        #{--nav-main-text-color},#{--el-menu-active-color},#{--el-border-color},
+        #{--footer-bg-color},#{--body-bg-color},#{--el-fill-color-blank},
+        #{--el-border-color-light},#{--el-color-primary},#{--el-color-white},
+        #{--tag-text-color},#{--el-text-color-primary},#{--content-text-color},
+        #{--content-descript-text-color},#{--comment-bg-color},
+        #{--comment-text-color},#{--comment-content-color},
+        #{--article-describe-text-color},#{--article-divider-color},
+        #{--article-diver-color})
+    </insert>
+
+    <delete id="deleteTheme">
+        DELETE FROM springbootmanager.theme WHERE id=#{id}
+    </delete>
+
+    <select id="love" resultType="java.lang.Integer">
+        UPDATE springbootmanager.theme set love=love+1 WHERE id=#{id}
+    </select>
+</mapper>

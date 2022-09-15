@@ -17,6 +17,7 @@ import javax.annotation.Resource;
  * @Version 1.0
  */
 @Service
+
 public class SumServiceImpl implements SumService {
     @Resource
     SumMapper sumMapper;
@@ -24,6 +25,10 @@ public class SumServiceImpl implements SumService {
     @Override
     public RespModel getSum() {
         SumEntity res = sumMapper.getSum();
+        Integer com = sumMapper.getCommentTotal();
+        res.setCommentTotal(com == null ? 0 : com);
+        res.setArticleTotal(res.getArticleTotal() == null ? 0 : res.getArticleTotal());
+        res.setVisitTotal(res.getVisitTotal() == null ? 0 : res.getVisitTotal());
         return new RespModel(RespCode.SUCCESS, res);
     }
 }

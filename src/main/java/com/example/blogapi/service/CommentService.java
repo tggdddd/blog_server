@@ -54,5 +54,10 @@ public interface CommentService{
      * 获取所有评论的总数
      */
     RespModel pullCommentTotal();
+
+    /**
+     * 通过id获得邮箱
+     */
+    String getEmail(int id);
 }
 

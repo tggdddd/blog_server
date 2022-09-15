@@ -21,19 +21,20 @@
 
     <select id="searchArticle" resultType="com.example.blogapi.pojo.ArticleEntity">
         SELECT id,
-               title,
-               author,
-            date,
-            SUBSTRING (content, 1, 300) as content
+        title,
+        author,
+        date,
+        SUBSTRING(content, 1, 300) as content,
+        browse
         FROM article
         WHERE article.id IN (
-            SELECT articleId
-            FROM linktag
-            WHERE linktag.tagId IN (
-            SELECT id
-            FROM tag
-            where tag.tag = #{tagName}
-            ))
+        SELECT articleId
+        FROM linktag
+        WHERE linktag.tagId IN (
+        SELECT id
+        FROM tag
+        where tag.tag = #{tagName}
+        ))
     </select>
     <select id="searchArticleTotal" resultType="java.lang.Integer">
         SELECT count(id)

@@ -91,5 +91,7 @@
                articleId
         from springbootmanager.comment
     </select>
-
+    <select id="getEmail" resultType="java.lang.String">
+        SELECT email from springbootmanager.comment WHERE id = #{id}
+    </select>
 </mapper>

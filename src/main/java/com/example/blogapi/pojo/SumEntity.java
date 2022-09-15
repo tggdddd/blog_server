@@ -16,9 +16,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SumEntity {
     /*文章发布的总数*/
-    private int articleTotal;
+    private Integer articleTotal;
     // 网站访问次数
-    private int visitTotal;
+    private Integer visitTotal;
     // 评论总次数
-    private int commentTotal;
+    private Integer commentTotal;
 }
