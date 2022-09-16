@@ -33,14 +33,17 @@ public class CommentController {
     @PostMapping("/add")
     public RespModel add(@RequestBody CommentEntity commentEntity, HttpServletRequest request) {
         commentEntity.setDate(new Date());
-        String url = request.getHeader("Referer");
-        url += "article?id=" + commentEntity.getArticleId();
-        String email = "15014586591@139.com";
-        if (commentEntity.getParentId() != -1) {
-            email = commentService.getEmail(commentEntity.getParentId());
+        RespModel respModel = commentService.addComment(commentEntity);
+        if (respModel.getCode() == "200") {
+            String url = request.getHeader("Referer");
+            url += "article?id=" + commentEntity.getArticleId();
+            String email = "15014586591@139.com";
+            if (commentEntity.getParentId() != -1) {
+                email = commentService.getEmail(commentEntity.getParentId());
+            }
+            mailService.sendSimpleMail(email, "收到一个回复——来自blog", "您在博客上的评论被回复了，点击" + url + "查看回复的内容");
         }
-        mailService.sendSimpleMail(email, "收到一个回复——来自blog", "您在博客上的评论被回复了，点击" + url + "查看回复的内容");
-        return commentService.addComment(commentEntity);
+        return respModel;
     }
 
     /**

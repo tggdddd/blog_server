@@ -2,11 +2,13 @@ server:
   port: 8081
 
 spring:
+  profiles:
+    active: pro
+
+
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    url: jdbc:mysql://localhost:3306/springbootmanager?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2b8
-    password: 123456
     #hikari
     hikari:
       connection-init-sql: select 1
@@ -25,7 +27,4 @@ spring:
 mybatis:
   mapper-locations: classpath:com.example.blogapi.mapper/**/*.xml
 
-logging:
-  level:
-    com.example.blogapi.mapper: DEBUG
 
