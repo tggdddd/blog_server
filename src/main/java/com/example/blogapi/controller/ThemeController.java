@@ -1,6 +1,7 @@
 package com.example.blogapi.controller;
 
 import com.example.blogapi.resp.RespModel;
+import com.example.blogapi.service.MailService;
 import com.example.blogapi.service.ThemeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +24,8 @@ import java.util.Map;
 public class ThemeController {
     @Resource
     ThemeService themeService;
-
+    @Resource
+    MailService mailService;
     /**
      * 返回所有的主题
      */
@@ -34,7 +36,11 @@ public class ThemeController {
 
     @PostMapping("/add")
     public RespModel addThemes(@RequestBody Map<String, String> map) {
-        return themeService.addThemes(map);
+        RespModel respModel = themeService.addThemes(map);
+        if (respModel.getCode() == "200") {
+            mailService.sendSimpleMail("15014586591@139.com", "blog新增了一个主题——来自blog", map.get("author") + "在您在博客上新增了主题  " + map.get("name") + "---");
+        }
+        return respModel;
     }
 
     @GetMapping("/love")
