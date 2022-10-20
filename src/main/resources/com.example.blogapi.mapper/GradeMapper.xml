@@ -3,7 +3,7 @@
 
 <mapper namespace="com.example.blogapi.mapper.GradeMapper">
 
-
+    <cache></cache>
     <insert id="addGrade">
         INSERT INTO springbootmanager.grade(articleId)
         VALUES(#{gradeId})

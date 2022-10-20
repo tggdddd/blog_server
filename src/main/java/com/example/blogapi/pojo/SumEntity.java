@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @ClassName SumEntity
  * @Description
@@ -14,7 +16,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SumEntity {
+public class SumEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
     /*文章发布的总数*/
     private Integer articleTotal;
     // 网站访问次数

@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginResp {
+    private static final long serialVersionUID = 1L;
     private String account;
 
     private String token;

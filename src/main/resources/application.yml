@@ -1,12 +1,17 @@
+##https端口
 server:
-  port: 8081
+  port: 8443
+  ssl:
+    key-store: classpath:stopit.icu.jks
+    key-store-type: jks
+    key-store-password: rg0582j0u270
 
+#运行环境
 spring:
   profiles:
     active: pro
 
-
-
+  #数据库参数
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     #hikari
@@ -14,7 +19,8 @@ spring:
       connection-init-sql: select 1
       minimum-idle: 5
       maximum-pool-size: 50
-    #邮箱
+
+  #邮箱
   mail:
     host: smtp.qq.com
     username: 1425187931@qq.com
@@ -23,8 +29,31 @@ spring:
     port: 25
     protocol: smtp
     default-encoding: UTF-8
+  #线程池
+  task:
+    execution:
+      pool:
+        max-size: 15
+        core-size: 5
+        queue-capacity: 100
+    scheduling:
+      pool:
+        size: 5
 
+#mybatis缓存
 mybatis:
   mapper-locations: classpath:com.example.blogapi.mapper/**/*.xml
+  configuration:
+    cache-enabled: true
+
+#七牛云
+qiniu:
+  key:
+    access: G6cerIQacjqaYvvxz3f6Vp_gAUEhxGXKVcgHbxP8
+    secret: SxFV6ARUzGLx8ywCRrsKgQVo5SZ4JvRU_WrbvPmT
+  bucket:
+    img:
+      name: blog-api-space
+      url: http://rk1aw0nfj.hn-bkt.clouddn.com
 
 

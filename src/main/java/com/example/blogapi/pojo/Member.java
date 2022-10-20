@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @ClassName Member
  * @Description
@@ -14,7 +16,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Member {
+public class Member implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String id;
     private String account;
     private String password;

@@ -3,6 +3,7 @@
 
 <mapper namespace="com.example.blogapi.mapper.ArticleMapper">
     <!--    添加文章-->
+    <cache></cache>
     <insert id="addArticle" parameterType="com.example.blogapi.pojo.ArticleEntity" keyColumn="id" keyProperty="id"
             useGeneratedKeys="true">
         INSERT INTO springbootmanager.article(title,

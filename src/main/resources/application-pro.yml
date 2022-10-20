@@ -1,5 +1,5 @@
 spring:
   datasource:
     username: root
-    url: jdbc:mysql://47.97.191.105:3306/springbootmanager?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2b8
-    password: Qq123456.
+    url: jdbc:mysql://1.12.76.145:3306/springbootmanager?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2b8
+    password: Qq1425187931

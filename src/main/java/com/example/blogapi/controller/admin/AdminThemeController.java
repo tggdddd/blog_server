@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/admin/theme")
-public class adminThemeController {
+public class AdminThemeController {
     @Resource
     ThemeService themeService;
 

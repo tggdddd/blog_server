@@ -5,5 +5,5 @@ logging:
 spring:
   datasource:
     username: root
-    url: jdbc:mysql://localhost:3306/springbootmanager?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2b8
+    url: jdbc:mysql://localhost:3306/springbootmanager
     password: 123456
