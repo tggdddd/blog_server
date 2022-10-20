@@ -1,5 +1,6 @@
 package com.example.blogapi.utils;
 
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +18,7 @@ import java.net.URISyntaxException;
  * @Version 1.0
  */
 @SpringBootTest
+@Ignore
 class QiniuUtilTest {
     @Autowired
     QiniuUtil qiniuUtil;
@@ -26,6 +28,5 @@ class QiniuUtilTest {
         File file = new File("G:\\恶补中\\博客\\blogAPI\\src\\main\\resources\\static\\img.png");
         FileInputStream inputStream = new FileInputStream(file);
         qiniuUtil.upload(inputStream, "aaa", "png");
-        Thread.sleep(40000);
     }
 }

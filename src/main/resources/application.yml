@@ -19,7 +19,10 @@ spring:
       connection-init-sql: select 1
       minimum-idle: 5
       maximum-pool-size: 50
-
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
   #邮箱
   mail:
     host: smtp.qq.com
