@@ -8,6 +8,7 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
+import sun.misc.ObjectInputFilter;
 
 @SpringBootApplication
 @MapperScan("com.example.blogapi.mapper")
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 public class BlogApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(BlogApiApplication.class, args);
+        ObjectInputFilter.Config.createFilter("com.example.blogapi.*;!*");
     }
 
     @Bean
