@@ -1,6 +1,6 @@
-#logging:
-#  level:
-#    com.example.blogapi.mapper: DEBUG
+logging:
+  level:
+    com.example.blogapi.mapper.ThemeMapper: DEBUG
 
 #spring:
 #  datasource:

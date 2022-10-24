@@ -57,4 +57,8 @@ public class AdminThemeController {
     // public RespModel love(int id) {
     //     return themeService.love(id);
     // }
+    @GetMapping("/defaultId")
+    public RespModel defaultId() {
+        return themeService.defaultId();
+    }
 }

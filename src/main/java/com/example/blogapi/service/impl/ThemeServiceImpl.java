@@ -29,6 +29,12 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
+    public RespModel getThemesContainerIgnore() {
+        List<Map> list = themeMapper.getThemesContainerIgnore();
+        return new RespModel(RespCode.SUCCESS, list);
+    }
+
+    @Override
     public RespModel addThemes(Map map) {
         int i = themeMapper.insertTheme(map);
         if (i == 1) {
@@ -55,11 +61,15 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public RespModel update(Map map) {
-        int res = themeMapper.insertTheme(map);
+        int res = themeMapper.updateTheme(map);
         if (res == 1) {
-            themeMapper.deleteTheme(Integer.parseInt((String) map.get("id")));
             return new RespModel(RespCode.SUCCESS, res);
         }
         return new RespModel(RespCode.FAILURE, res);
+    }
+
+    @Override
+    public RespModel defaultId() {
+        return new RespModel(RespCode.SUCCESS, themeMapper.defaultId());
     }
 }

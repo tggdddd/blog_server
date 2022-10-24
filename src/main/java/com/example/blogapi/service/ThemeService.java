@@ -17,6 +17,8 @@ public interface ThemeService {
      */
     public RespModel getThemes();
 
+    public RespModel getThemesContainerIgnore();
+
     /**
      * 新增主题
      */
@@ -36,5 +38,7 @@ public interface ThemeService {
      * 修改
      */
     public RespModel update(Map map);
+
+    public RespModel defaultId();
 }
 

@@ -27,9 +27,21 @@ public interface ThemeMapper {
     Integer deleteTheme(Integer id);
 
     /**
+     * 更新主题
+     */
+    Integer updateTheme(Map map);
+
+    /**
      * 增加love次数1
      */
     Integer love(int id);
     // /**修改主题*/
     // Integer updateTheme(Map map);
+
+    /**
+     * 默认的主题ID
+     */
+    Integer defaultId();
+
+    List<Map> getThemesContainerIgnore();
 }
