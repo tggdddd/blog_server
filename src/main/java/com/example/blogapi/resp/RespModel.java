@@ -18,9 +18,15 @@ public class RespModel {
     String code;
     String msg;
     Object data;
+
     public RespModel(RespCode respCode, Object data) {
         this.code = respCode.getCode();
         this.msg = respCode.getMsg();
         this.data = data;
+    }
+
+    public RespModel(RespCode respCode) {
+        this.code = respCode.getCode();
+        this.msg = respCode.getMsg();
     }
 }

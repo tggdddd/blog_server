@@ -9,7 +9,7 @@ server:
 #运行环境
 spring:
   profiles:
-    active: pro
+    active: dev
 
   #数据库参数
   datasource:

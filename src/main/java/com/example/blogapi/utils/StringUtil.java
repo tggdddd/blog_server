@@ -1,5 +1,6 @@
 package com.example.blogapi.utils;
 
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -20,5 +21,13 @@ public class StringUtil {
             return true;
         }
         return false;
+    }
+
+    private static final Random random = new Random();
+
+    /* 随机生成4位数字 */
+    public static String generateNum() {
+        int num = random.nextInt(10000) + 1000;
+        return String.valueOf(num % 10000);
     }
 }

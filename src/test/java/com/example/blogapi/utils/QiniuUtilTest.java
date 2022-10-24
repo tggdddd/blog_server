@@ -25,7 +25,7 @@ class QiniuUtilTest {
 
     @Test
     void upload() throws URISyntaxException, IOException, InterruptedException {
-        File file = new File("G:\\恶补中\\博客\\blogAPI\\src\\main\\resources\\static\\img.png");
+        File file = new File("C:\\Users\\15014\\Pictures\\Camera Roll\\WIN_20220417_16_36_12_Pro.jpg");
         FileInputStream inputStream = new FileInputStream(file);
         qiniuUtil.upload(inputStream, "aaa", "png");
     }

@@ -20,9 +20,9 @@ public enum RespCode {
     DEL_FAILURE("778", "删除失败"),
     FAILURE("999", "网络异常"),
     PASS_ERROR("100", "账号密码错误"),
-
+    OPERATOR_ERROR("442", "操作终止，出现异常"),
     PERMISSION_ERROR("000", "没有权限！"),
-
+    FILE_ERROR("555", "文件名的格式不正确"),
     TOKEN_FAIL("321", "登陆失效， 请重新登陆");
     private String code;
     private String msg;
